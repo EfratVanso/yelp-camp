@@ -4,7 +4,7 @@ app.set("view engine", "ejs");
 var axios = require('axios').default;
 
 app.get("/",function(req, res){
-    res.send('landing page')
+    res.render("landing")
 });
 app.listen(3000, () => {
     console.log('yelp camp running on port 3000');
