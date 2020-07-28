@@ -1,3 +1,4 @@
+<%- include("partials/header") %>
 <h1>campgrounds pag</h1>
 <%campgrounds.forEach(function(campground){ %>
     <div>
@@ -5,3 +6,5 @@
         <img src="<%= campground.image%>" alt="">
     </div>
 <%});%>
+
+<%- include("partials/footer") %>
