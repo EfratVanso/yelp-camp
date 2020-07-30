@@ -47,7 +47,8 @@ app.post("/campgrounds", function (req, res) {
   //get data from form and add to campgrounds array
   var name = req.body.name;
   var image = req.body.image;
-  var newCampground = { name: name, image: image };
+  var desc = req.body.description;
+  var newCampground = { name: name, image: image, description:desc };
   //create new campground and save to db
   Campground.create(newCampground, function (err, newlyCreated) {
     if (err) {
@@ -55,7 +56,7 @@ app.post("/campgrounds", function (req, res) {
     } else {
       console.log(newlyCreated);
       //redirect back to campground page
-      res.redirect("/index"); // the default is to GET rout
+      res.redirect("/campgrounds"); // the default is to GET rout
     }
   });
 });
