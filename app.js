@@ -17,6 +17,18 @@ var campgroundSchema = new mongoose.Schema({
 });
 var Campground = mongoose.model("Campground", campgroundSchema);
 
+Campground.create({
+    name:"Granite Heel",
+    image:"https://q-xx.bstatic.com/xdata/images/hotel/max500/166833903.jpg?k=b92acc7258f01c29c6342161aa882ebaed025311daa44e9f66fee2775f638761&o="
+},function(err, campground){
+    if(err){
+        console.log(err);
+    }else{
+        console.log("CREATED");
+        console.log(campground);
+    }
+});
+
 var campgrounds = [
     {
         name: "name1",
