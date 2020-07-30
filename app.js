@@ -17,10 +17,16 @@ mongoose.connect("mongodb://localhost/yelp_camp", {
 var campgroundSchema = new mongoose.Schema({
   name: String,
   image: String,
+  description: String
 });
 var Campground = mongoose.model("Campground", campgroundSchema);
 
-app.get("/", function (req, res) {
+// Campground.create({
+//     name:"Dreams Vacation Rentals",
+//     image:"https://cf.bstatic.com/images/hotel/max1280x900/154/154488931.jpg",
+//     description:"One of our top picks in Kissimmee.    Located in Kissimmee, Dreams Vacation Rentals provides free WiFi, and guests can enjoy an outdoor swimming pool, a fitness centre and a tennis court.    All units here are air-conditioned and feature a flat-screen TV, a living room with a sofa, a well-equipped kitchen and a private bathroom with hot tub, a hairdryer and free toiletries."})
+
+    app.get("/", function (req, res) {
   res.render("landing");
 });
 
@@ -31,7 +37,7 @@ app.get("/campgrounds", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("campgrounds", { campgrounds: allCampgrounds });
+      res.render("index", { campgrounds: allCampgrounds });
     }
   });
 });
@@ -49,7 +55,7 @@ app.post("/campgrounds", function (req, res) {
     } else {
       console.log(newlyCreated);
       //redirect back to campground page
-      res.redirect("/campgrounds"); // the default is to GET rout
+      res.redirect("/index"); // the default is to GET rout
     }
   });
 });
@@ -58,6 +64,19 @@ app.post("/campgrounds", function (req, res) {
 app.get("/campgrounds/new", function (req, res) {
   res.render("new");
 });
+
+//SHOw - show more info about campground
+app.get("/campgrounds/:id", function (req, res) {
+    //find the campground with provided id
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err){
+            console.log(err)
+        }else{
+            console.log(req.params.id)
+            res.render("show", {campground: foundCampground});
+        }
+    })
+  });
 
 app.listen(3000, () => {
   console.log("yelp camp running on port 3000");
