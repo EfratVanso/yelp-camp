@@ -17,17 +17,17 @@ var campgroundSchema = new mongoose.Schema({
 });
 var Campground = mongoose.model("Campground", campgroundSchema);
 
-Campground.create({
-    name:"Granite Heel",
-    image:"https://q-xx.bstatic.com/xdata/images/hotel/max500/166833903.jpg?k=b92acc7258f01c29c6342161aa882ebaed025311daa44e9f66fee2775f638761&o="
-},function(err, campground){
-    if(err){
-        console.log(err);
-    }else{
-        console.log("CREATED");
-        console.log(campground);
-    }
-});
+// Campground.create({
+//     name:"Granite Heel",
+//     image:"https://q-xx.bstatic.com/xdata/images/hotel/max500/166833903.jpg?k=b92acc7258f01c29c6342161aa882ebaed025311daa44e9f66fee2775f638761&o="
+// },function(err, campground){
+//     if(err){
+//         console.log(err);
+//     }else{
+//         console.log("CREATED");
+//         console.log(campground);
+//     }
+// });
 
 var campgrounds = [
     {
@@ -56,8 +56,14 @@ app.get("/", function (req, res) {
     res.render("landing");
 });
 app.get("/campgrounds", function (req, res) {
-    
-    res.render("campgrounds", { campgrounds: campgrounds });
+    //get all campground from db
+    Campground.find({}, function(err, allCampgrounds){
+        if(err){
+            console.log(err);
+        } else{
+            res.render("campgrounds", { campgrounds: allCampgrounds });
+        }
+    });
 });
 app.post("/campgrounds", function (req, res) {
     //get data from form and add to campgrounds array
