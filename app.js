@@ -1,8 +1,9 @@
-const express = require("express");
-const app = express();
-var bodyParser = require("body-parser");
-var axios = require("axios").default;
-const mongoose = require("mongoose");
+var express = require("express"),
+    app = express(),
+    bodyParser = require("body-parser"),
+    axios = require("axios").default,
+    mongoose = require("mongoose"),
+    Campground = require("./models/campground");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -13,20 +14,14 @@ mongoose.connect("mongodb://localhost/yelp_camp", {
 });
 // mongoose.connect('mongodb://localhost:27017/yelp_camp', {useNewUrlParser: true, useUnifiedTopology: true});
 
-//SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-var Campground = mongoose.model("Campground", campgroundSchema);
-
 // Campground.create({
 //     name:"Dreams Vacation Rentals",
 //     image:"https://cf.bstatic.com/images/hotel/max1280x900/154/154488931.jpg",
 //     description:"One of our top picks in Kissimmee.    Located in Kissimmee, Dreams Vacation Rentals provides free WiFi, and guests can enjoy an outdoor swimming pool, a fitness centre and a tennis court.    All units here are air-conditioned and feature a flat-screen TV, a living room with a sofa, a well-equipped kitchen and a private bathroom with hot tub, a hairdryer and free toiletries."})
 
-    app.get("/", function (req, res) {
+//var Campground = mongoose.model("Campground", campgroundSchema);
+
+app.get("/", function (req, res) {
   res.render("landing");
 });
 
