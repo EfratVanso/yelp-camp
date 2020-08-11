@@ -35,7 +35,7 @@ app.get("/campgrounds", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("index", { campgrounds: allCampgrounds });
+      res.render("campgrounds/index", { campgrounds: allCampgrounds });
     }
   });
 });
@@ -61,7 +61,7 @@ app.post("/campgrounds", function (req, res) {
 
 //NEW - show form to create new campground
 app.get("/campgrounds/new", function (req, res) {
-  res.render("new");
+  res.render("campgrounds/new");
 });
 
 //SHOw - show more info about campground
@@ -72,10 +72,27 @@ app.get("/campgrounds/:id", function (req, res) {
             console.log(err)
         }else{
             console.log(req.params.id)
-            res.render("show", {campground: foundCampground});
+            res.render("campgrounds/show", {campground: foundCampground});
         }
     })
   });
+  //==================================
+  //  COMMENTS ROUTES
+  //==================================
+  app.get("/campgrounds/:id/comments/new", function (req, res) {
+    //find the campground with provided id
+    Campground.findById(req.params.id, function(err, foundCampground){
+      if(err){
+        console.log(err)
+    }else{
+        console.log(req.params.id)
+        res.render("comments/new", {campground: foundCampground});
+    }
+    })
+  });
+
+
+  //==================================
 
 app.listen(3000, () => {
   console.log("yelp camp running on port 3000");
