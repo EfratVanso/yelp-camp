@@ -11,25 +11,26 @@ var express      = require("express"),
     User         =require("./models/user"),
     seedDB       = require("./seeds");
 
-seedDB();
+
+// mongoose.connect('mongodb://localhost:27017/yelp_camp', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost/yelp_camp", {useNewUrlParser: true, useUnifiedTopology: true,});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public')); //__dirname = current path
-console.log(__dirname +'/public')
+seedDB();
 
-mongoose.connect("mongodb://localhost/yelp_camp", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-// mongoose.connect('mongodb://localhost:27017/yelp_camp', {useNewUrlParser: true, useUnifiedTopology: true});
-
-// Campground.create({
-//     name:"Dreams Vacation Rentals",
-//     image:"https://cf.bstatic.com/images/hotel/max1280x900/154/154488931.jpg",
-//     description:"One of our top picks in Kissimmee.    Located in Kissimmee, Dreams Vacation Rentals provides free WiFi, and guests can enjoy an outdoor swimming pool, a fitness centre and a tennis court.    All units here are air-conditioned and feature a flat-screen TV, a living room with a sofa, a well-equipped kitchen and a private bathroom with hot tub, a hairdryer and free toiletries."})
-
-//var Campground = mongoose.model("Campground", campgroundSchema);
+//PASSPORT CONFIGURATION
+app.use(require("express-session")({
+  secret: "It can be anything. it helps to encode the password",
+  resave:false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get("/", function (req, res) {
   res.render("landing");
