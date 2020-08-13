@@ -11,6 +11,8 @@ seedDB();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + '/public')); //__dirname = current path
+console.log(__dirname +'/public')
 
 mongoose.connect("mongodb://localhost/yelp_camp", {
   useNewUrlParser: true,
@@ -101,7 +103,6 @@ app.get("/campgrounds/:id", function (req, res) {
         if(err){
           console.log(err);
         }else{
-          console.log(req);
           campground.comments.push(comment);
           campground.save();
           res.redirect("/campgrounds/"+campground._id);
