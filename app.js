@@ -4,6 +4,7 @@ var express = require("express"),
     axios = require("axios").default,
     mongoose = require("mongoose"),
     Campground = require("./models/campground"),
+    Comment =  require("./models/comment"),
     seedDB = require("./seeds");
 
 seedDB();
@@ -89,6 +90,25 @@ app.get("/campgrounds/:id", function (req, res) {
         res.render("comments/new", {campground: foundCampground});
     }
     })
+  });
+  app.post("/campgrounds/:id/comments",function(req, res){
+    Campground.findById(req.params.id, function(err,campground){
+    if (err){
+      console.log(err);
+      res.redirect("/campgrounds/");
+    } else{
+      Comment.create(req.body.comment,function(err,comment){
+        if(err){
+          console.log(err);
+        }else{
+          console.log(req);
+          campground.comments.push(comment);
+          campground.save();
+          res.redirect("/campgrounds/"+campground._id);
+        }
+      })
+    }
+  });
   });
 
 
