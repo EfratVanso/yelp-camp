@@ -3,6 +3,7 @@ var express = require("express"),
   passport = require("passport"),
   User = require("../models/user");
 
+//root rout
 router.get("/", function (req, res) {
   res.render("landing");
 });
@@ -15,6 +16,7 @@ router.get("/", function (req, res) {
 router.get("/register", function (req, res) {
   res.render("register");
 });
+
 //handle sign up logic
 router.post("/register", function (req, res) {
   var newUser = new User({ username: req.body.username });
@@ -43,6 +45,7 @@ router.post(
   }),
   function (req, res) {}
 );
+
 //handle logout
 router.get("/logout", function (req, res) {
   req.logout();
