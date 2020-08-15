@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-md-9">
-      <hr />
+<p></p>
       <div class="thumbnail">
         <img class="img-responsive" src="<%= campground.image%>" alt="" />
         <div class="caption-full">
@@ -20,13 +20,18 @@
           <h4><a href=""><%= campground.name%></a></h4>
           <p><%= campground.description%></p>
           <em>Submitted by <%= campground.author.username%></em>
-          <p>
+          <!-- EDIT BUTTON:  -->
+          <p></p>
             <a
               href="/campgrounds/<%=campground._id%>/edit"
-              class="btn btn-warning"
+              class="btn btn-warning btn-sm"
               >Edit</a
             >
-          </p>
+          <!-- DELETE BUTTON - must be in form (for sending delete request) -->
+          <form style="display: inline" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger btn-sm">Delete</button>
+          </form>
+          <p></p>
         </div>
       </div>
       <div class="card card-body bg-light">
