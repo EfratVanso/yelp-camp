@@ -43,7 +43,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//send the current user information to every rout
+//send the current user information to every rout/template
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;//it will be empty if no one has signed in
   next();
