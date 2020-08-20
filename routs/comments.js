@@ -47,22 +47,39 @@ router.post("/campgrounds/:id/comments", isLoggedIn, function (req, res) {
 
 //comments edit rout
 router.get("/campgrounds/:id/comments/:comment_id/edit", function (req, res) {
-  Comment.findById(req.params.comment_id,function(err, foundComment){
-    if(err){
+  Comment.findById(req.params.comment_id, function (err, foundComment) {
+    if (err) {
       res.redirect("back");
-    }else{
-      res.render("comments/edit",{campground_id: req.params.id, comment: foundComment})
+    } else {
+      res.render("comments/edit", {
+        campground_id: req.params.id,
+        comment: foundComment,
+      });
     }
   });
 });
 
 //comments edit rout
-router.put("/campgrounds/:id/comments/:comment_id",function(req,res){
-  Comment.findByIdAndUpdate(req.params.comment_id,req.body.comment, function(err, updatedComment){
-    if(err){
+router.put("/campgrounds/:id/comments/:comment_id", function (req, res) {
+  Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function (
+    err,
+    updatedComment
+  ) {
+    if (err) {
       res.redirect("back");
-    }else{
-      res.redirect("/campgrounds/"+ req.params.id);
+    } else {
+      res.redirect("/campgrounds/" + req.params.id);
+    }
+  });
+});
+
+//comments destroy rout
+router.delete("/campgrounds/:id/comments/:comment_id", function (req, res) {
+  Comment.findByIdAndRemove(req.params.comment_id, function (err) {
+    if (err) {
+      res.redirect("back");
+    } else {
+      res.redirect("/campgrounds/" + req.params.id);
     }
   });
 });
