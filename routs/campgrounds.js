@@ -17,6 +17,12 @@ router.get("/campgrounds", function (req, res) {
     }
   });
 });
+//NEW - show form to create new campground
+router.get("/campgrounds/new", middleware.isLoggedIn, function (req, res) {
+  req.flash("error","campgroundserror");
+  req.flash("success","campgroundssuccess");
+  res.render("campgrounds/new");
+});
 
 //CREATE - add new data to db
 router.post("/campgrounds", middleware.isLoggedIn, function (req, res) {
@@ -39,16 +45,11 @@ router.post("/campgrounds", middleware.isLoggedIn, function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log(newlyCreated);
+      //console.log(newlyCreated);
       //redirect back to campground page
       res.redirect("/campgrounds"); // the default is to GET rout
     }
   });
-});
-
-//NEW - show form to create new campground
-router.get("/campgrounds/new", middleware.isLoggedIn, function (req, res) {
-  res.render("campgrounds/new");
 });
 
 //SHOw - show more info about campground

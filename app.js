@@ -48,6 +48,8 @@ passport.deserializeUser(User.deserializeUser());
 //send the current user information to every rout/template
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;//it will be empty if no one has signed in
+  res.locals.error = req.flash("error");//it will pass error message to every template 
+  res.locals.success = req.flash("success");//it will success pass message to every template 
   next();
 });
 
