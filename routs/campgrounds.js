@@ -19,8 +19,6 @@ router.get("/campgrounds", function (req, res) {
 });
 //NEW - show form to create new campground
 router.get("/campgrounds/new", middleware.isLoggedIn, function (req, res) {
-  req.flash("error","campgroundserror");
-  req.flash("success","campgroundssuccess");
   res.render("campgrounds/new");
 });
 
